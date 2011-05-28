@@ -1,0 +1,18 @@
+/* the humans responsible & colophon */
+/* humanstxt.org */
+
+
+/* TEAM */
+   Deian Vasilev | Imprimatur Studio Ltd
+   Contact: Deian.Vasilev [at] gmail.com
+   Site: http://imprimatur.bg
+   Twitter: @deianvasilev
+   Location: Varna, Bulgaria
+
+/* THANKS */
+   Names (& URL):
+
+/* SITE */
+   Standards: HTML5, CSS3
+   Components: Modernizr, Ender
+   Software: Eclipse for PHP Developers

@@ -1,0 +1,640 @@
+/* ============================================================================================================================ **
+**                                               В С И Ч К И   М Е Д И И
+** ============================================================================================================================ */
+
+
+/* ============================================================================================================= 1. Нормализация */
+/**
+ *  Задачата на нулирането на стилове в таблицата е да намали несъответствията
+ *  между браузърите (всеки от които си задава различни стилове по подразбиране за
+ *  елементи на които не е посочено изрично кой стил да ползват, като височината на
+ *  междуредията (line-height), отместванията (margin), размерът на шрифта на заглавията (h1, h2, h3) и т.н.
+ *  Основните причини са дискутирани тук: http://meyerweb.com/eric/thoughts/2007/04/18/reset-reasoning/
+ *  html5doctor.com Reset Stylesheet (Eric Meyer's Reset Reloaded + HTML5 baseline)
+ *  v1.6.1 2010-09-17 | Authors: Eric Meyer & Richard Clark
+ *  html5doctor.com/html-5-reset-stylesheet/
+ */
+
+/**
+ * На долуизброените елементи се присвоява:
+ * margin:0;				// нулево отстояние
+ * padding:0;				// нулево запълване
+ * border:0;				// нулев кант
+ * font-size:100%;			// размер на шрифта 100%
+ * font: inherit;			// наследява параметрите на "font" от родителския елемент
+ * vertical-align:baseline; // подравнява базовата линия (baseline) на кутията на елемента с базовата
+ * 							   линия на родителската такава. Ако кутията на елемента няма базова линия,
+ * 							   подравнява канта на долното отстояние (bottom margin edge) с базовата
+ * 							   линия на родителския елемент.
+ */
+html, body, div, span, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+abbr, address, cite, code, del, dfn, em, img, ins, kbd, q, samp,
+small, strong, sub, sup, var, b, i, dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, figcaption, figure,
+footer, header, hgroup, menu, nav, section, summary,
+time, mark, audio, video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 100%;
+  vertical-align: baseline;
+}
+
+/**
+ * HTML5 елементите да се показват като блок елементи
+ */
+header,
+hgroup,
+section,
+article,
+aside,
+footer,
+nav,
+menu,
+figcaption,
+figure,
+details,
+summary {
+    display: block;
+}
+
+/**
+ * При цитати да не поставя автоматично кавички
+ */
+blockquote,
+q {
+    quotes: none;
+}
+
+blockquote:before,
+blockquote:after,
+q:before,
+q:after {
+    content: "";
+    content: none;
+}
+
+/**
+ * INS - елемента за вмъкнат текст (с цитат за произхода на текста и дадата на вмъкването му в документа)
+ * изписва текста на жълт фон (това може да го обмисля).
+ */
+ins {
+    background-color: #ff9;
+    color: #000;
+    text-decoration: none;
+}
+
+/**
+ * HTML5 елемент
+ * The mark element represents a run of text in one document marked or highlighted for reference purposes,
+ * due to its relevance in another context. When used in a quotation or other block of text referred to
+ * from the prose, it indicates a highlight that was not originally present but which has been added to
+ * bring the reader's attention to a part of the text that might not have been considered important by
+ * the original author when the block was originally written, but which is now under previously unexpected
+ * scrutiny. When used in the main prose of a document, it indicates a part of the document that has been
+ * highlighted due to its likely relevance to the user's current activity.
+ *
+ * Изписва текста на жълт фон, да го направи курсив и почернен (това може да го обмисля).
+ */
+mark {
+    background-color: #ff9;
+    color: #000;
+    font-style: italic;
+    font-weight: bold;
+}
+
+/**
+ * Задрасква текста в DEL елемент
+ */
+del {
+    text-decoration: line-through;
+}
+
+/**
+ * Текста в елемент за абревиатура и дефиниция
+ * (<ABBR title="World Wide Web">WWW</ABBR>)
+ * стилът се прилага само за елементи които имат title атрибут (описание, за да не се получава объркване)
+ */
+abbr[title],
+dfn[title] {
+    border-bottom: 1px dotted;
+    cursor: help;
+}
+
+/**
+ * Уеднаквява показването на таблиците (без кант и разтояние между тях)
+ */
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+
+/**
+ * Хоризонтален разделител: показва се като блок елемент с височина 1 пиксел
+ * с кант само в горният край, сив цвят #ccc, нулево хоризонтално отстояние
+ * 1em вертикално такова, нулево запълване.
+ */
+hr {
+    display: block;
+    height: 1px;
+    border: 0;
+    border-top: 1px solid #ccc;
+    margin: 1em 0;
+    padding: 0;
+}
+
+/**
+ * За да се избегне разминаването при рендване на шрифтовете в различните браузъри и операционни системи
+ * според Yahoo 13px с височина на междуредието 16px (line-height (leading) 123.1%
+ * от размера на шрифта) е решението на проблема. Размера на шрифта се задава в % след този ред
+ * размерите отговарящи на %: developer.yahoo.com/yui/fonts/
+ * за IE6/7 се оставя *font-size:small hack, който да запази спецификата
+ * x-small е за IE6/7 quirks mode, от който няма нужда тъй като вкарваме браузърите в standart mode винаги.
+ * YUI Library's fonts.css: developer.yahoo.com/yui/
+ */
+body {
+    font:13px/1.231 sans-serif;
+    *font-size:small;
+}
+
+/* Нормализиране на monospace размера
+ * en.wikipedia.org/wiki/MediaWiki_talk:Common.css/Archive_11#Teletype_style_fix_for_Chrome */
+pre, code, kbd, samp {
+    font-family: monospace, sans-serif;
+}
+
+/**
+ * Bicubic преоразмеряване за неестествено оразмерен IMG:
+ * code.flickr.com/blog/2008/11/12/on-ui-quality-the-little-things-client-side-image-resizing/
+ */
+.ie7 img { -ms-interpolation-mode: bicubic; }
+
+
+
+/* ============================================================================================================= 2. БАЗА */
+/**
+ * 1. Винаги форсира показване на scrollbar при браузърите които не са IE
+ *    избягва се "отместването" на съдържанието когато имаме страница събираща се във
+ *    viewport-a на браузъра и такава която е по-висока от него.
+ * 2. Премахва настройката на текста в iOS без да забранява user zoom:
+ *    www.456bereastreet.com/archive/201012/controlling_text_size_in_safari_for_ios_without_disabling_user_zoom/
+ * 3. Респективно и в IE Mobile
+ */
+html {
+    overflow-y: scroll; /* 1 */
+    -webkit-text-size-adjust:100%; /* 2 */
+    -ms-text-size-adjust:100%; /* 3 */
+}
+
+/* ............................................................................................................. Линкове */
+/**
+ * Променя цвета по подразбиране при натискане на връзка в iOS ( Paul Irish :)
+ * j.mp/webkit-tap-highlight-color
+ */
+a:link {
+    -webkit-tap-highlight-color: #FF5E99;
+}
+
+/**
+ * Стилизира всички връзки да не показват пунктирана линия около <a> елемент при
+ * hover и клик (focus събитие при елемент): people.opera.com/patrickl/experiments/keyboard/test
+ */
+a:hover,
+a:active {
+    outline: none;
+}
+
+/**
+ * Глобална цветова схема за хипер връзка
+ */
+a,
+a:active,
+a:visited {
+    color: #05c;
+}
+
+a:visited {
+    color: #909;
+}
+
+a:hover {
+    color: #c00;
+}
+
+/* ............................................................................................................. Типография */
+/**
+ * Списъците с отместване 2em надясно, подредените списъци с десетични числа (1,2,3,4 и т.н.)
+ */
+ul,
+ol {
+    margin-left: 2em;
+}
+
+ol {
+    list-style-type: decimal;
+}
+
+/**
+ * Премахнати отстояния и стилове за навигационните списъци
+ */
+nav ul,
+nav li {
+    margin: 0;
+    list-style:none;
+    list-style-image: none;
+}
+
+small {
+    font-size: 85%;
+}
+
+b,
+strong,
+th {
+    font-weight: bold;
+}
+
+td {
+    vertical-align: top;
+}
+
+/**
+ * Настроени sub, sup да не влият на височината на междуредието (line-height): gist.github.com/413930
+ */
+sub,
+sup {
+    font-size: 75%;
+    line-height: 0;
+    position: relative;
+}
+
+sup {
+    top: -0.5em;
+}
+
+sub {
+    bottom: -0.25em;
+}
+
+/**
+ * Текста си остава в контейнера в който се намира
+ *  www.pathf.com/blogs/2008/05/formatting-quoted-code-in-blog-posts-css21-white-space-pre-wrap/
+ */
+pre {
+    white-space: pre;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    padding: 15px;
+}
+
+/* ............................................................................................................. Формуляри */
+/**
+ * Уеднаквява стартовата позиция на текста легенда за формулярно поле в IE6/7
+ */
+.ie6 legend,
+.ie7 legend {
+    margin-left: -7px;
+}
+
+/**
+ * 1. Стандартизира размера на бутоните и следните елементи в IE:
+ *    www.viget.com/inspire/styling-the-button-element-in-internet-explorer/
+ * 2. Webkit браузърите добавят 2px отстояние (margin) на формулярните елементи.
+ *    Firefox добавя 1px margin над и под textarea
+ * 3. Настройва размера на шрифта да съвпада с този на <body>, и серифен шрифт font-family
+ * 4. Подравнява към baseline
+ */
+button,
+input,
+select,
+textarea {
+    width: auto; /* 1 */
+    overflow: visible; /* 1 */
+    margin: 0; /* 2 */
+    font-size: 100%; /* 3 */
+    font-family: sans-serif; /* 3 */
+    vertical-align: baseline; /* 4 */
+}
+
+/**
+ * 1. Премахва scrollbar на формулярен елемент textarea в IE:
+ *    www.sitepoint.com/blogs/2010/08/20/ie-remove-textarea-scrollbars/
+ * 2. Подравнява към text-top
+ */
+textarea {
+    overflow: auto; /* 1 */
+    vertical-align:text-top; /* 2 */
+}
+
+/**
+ * Правилният курсор за кликаеми input елементи
+ */
+label,
+input[type="button"],
+input[type="submit"],
+input[type="image"],
+button {
+    cursor: pointer;
+}
+
+/**
+ * Премахва излишното запълване и вътрешен кант във Firefox
+ */
+input::-moz-focus-inner,
+button::-moz-focus-inner {
+    border: 0;
+    padding: 0;
+}
+
+/**
+ * Цветове за валидация на формулярни полета
+ */
+input:valid,
+textarea:valid   {  }
+input:invalid,
+textarea:invalid {
+    border-radius: 1px;
+    -moz-box-shadow: 0px 0px 5px red;
+    -webkit-box-shadow: 0px 0px 5px red;
+    box-shadow: 0px 0px 5px red;
+}
+
+.no-boxshadow input:invalid,
+.no-boxshadow textarea:invalid {
+    background-color: #f0dddd;
+}
+
+
+/* ============================================================================================================================ **
+**                                                       П Р О Е К Т
+** ============================================================================================================================ */
+
+
+
+
+/* ============================================================================================================= 3. БАЗА, Специфична за конкретния проект*/
+
+/**
+ * Цвета на текста за цялата страница
+ * вариации за избор между: #000000 #212121 #444444 - от чисто черно до нюанс на черното
+ * tweet според който нюанс на черното се чете по-добре (но примерно в iPad черното е
+ * по-добро: twitter.com/H_FJ/statuses/11800719859
+ */
+body, select, input, textarea {
+  color: #212121;
+  /* Базовият шрифт за страницата Arial в Windows, Helvatica в iOS */
+  font-family: serif;
+}
+
+/**
+ *  Headers (h1,h2, и т.н.) без font-size или margin по подразбиране. Да се дефинират в кода за конкретния проект.
+ */
+h1,h2,h3,h4,h5,h6 {
+    font-weight: bold;
+}
+
+/**
+ * Цветове при маркиране на съдържание, премахване на сянка от текст ако евентуално има такава при маркирането.
+ * нужно е декларациите да са самостоятелни.
+ */
+::-moz-selection{
+    background: #FFF000;
+    color:#000;
+    text-shadow: none;
+}
+::selection {
+    background:#FFF000;
+    color:#000;
+    text-shadow: none;
+}
+
+
+
+/* ============================================================================================================= 4. ОСНОВНИ СТИЛОВЕ*/
+/* Основни стилове
+ * Автор: Деян Василев | Imprimatur Studio - Varna, Bulgaria
+ */
+/* ............................................................................................................. Линкове */
+
+/* ............................................................................................................. Формуляри */
+
+/* ............................................................................................................. Типография */
+
+
+/* ============================================================================================================= 4.1 КОМПОНЕНТИ */
+
+/* ............................................................................................................. Меню */
+
+/* ............................................................................................................. Статия */
+
+/* ............................................................................................................. Каталог */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* ============================================================================================================= 5. ПОМОЩНИ КЛАСОВЕ*/
+/* Помощни класове без пряка връзка със семантиката на документа: Дефинирай стиловете за сайта преди тази секция.
+ */
+
+/* ............................................................................................................. Скриване на елемент */
+/**
+ * Заместване на текст от изображение, като същевременно текста остава в документа за индексиране от търсачките.
+ * Трикът е да се ползва фоново изображение
+ */
+.ir {
+    display: block;
+    text-indent: -999em;
+    overflow: hidden;
+    background-repeat: no-repeat;
+    text-align: left;
+    direction: ltr;
+}
+
+.ir br {
+    display: none;
+}
+
+/**
+ * Скриване и от браузъри и от екранни четци
+ * css-discuss.incutio.com/wiki/Screenreader_Visibility
+ */
+.skrit {
+    display: none;
+    visibility: hidden;
+}
+
+/**
+ * Скрива само визуално, но остава достъпно за екранни четци
+ * Jon Neal: www.webaim.org/techniques/css/invisiblecontent/  &  j.mp/visuallyhidden
+ */
+.vizualnoskrit {
+    border: 0;
+    clip: rect(0 0 0 0);
+    height: 1px;
+    margin: -1px;
+    overflow: hidden;
+    padding: 0;
+    position: absolute;
+    width: 1px;
+}
+
+/**
+ * Допълва класа .vizualnoskrit за да позволи на елемента да бъде взет на фокус при
+ * навигация с клавиатура: drupal.org/node/897638
+ */
+.vizualnoskrit.focusable:active,
+.vizualnoskrit.focusable:focus {
+    clip: auto;
+    height: auto;
+    margin: 0;
+    overflow: visible;
+    position: static;
+    width: auto;
+}
+
+/**
+ * Скрива визуално и от екранни четци, но запазва оформлението на страницата
+ */
+.nevidim {
+    visibility: hidden;
+}
+
+/* ............................................................................................................. Clearfix */
+/**
+ * Вълшебният CLEARFIX: Обновен, за да избегне margin-collapsing на child elements
+ * Накратко: добавяме псевдоелемент - интервал (/0020) който е само визуално скрит, но участва
+ * при оформлението преди И след елемента, за да се избегне рухването на
+ * вертикалните отстояния (и по този начин на оформлението на страницата)
+ * nicolasgallagher.com/micro-clearfix-hack/ (j.mp/bestclearfix)
+ */
+.cf:before,
+.clearfix:after {
+    content: "";
+    display: table;
+}
+
+.clearfix:after {
+    clear: both;
+}
+
+/* fix clearfix: blueprintcss.lighthouseapp.com/projects/15318/tickets/5-extra-margin-padding-bottom-of-page */
+.clearfix {
+    zoom: 1;
+}
+
+
+/* ============================================================================================================================ **
+**                                                       S C R E E N (481+)
+** ============================================================================================================================ */
+/* media queries за кореспондиращ дизайн
+ * Стиловете тук следват основните, за да могат успешно да ги заместят.
+ * Затварящите /mediaquery коментари са необходими за respond.js min/max-width Media Query polyfill
+ */
+
+@media only screen and (min-width: 480px) {
+  /* стиловите настройки за viewport 480px и нагоре описваме тук */
+
+}/*/mediaquery*/
+
+/* ============================================================================================================================ **
+**                                                       S C R E E N (768+)
+** ============================================================================================================================ */
+@media only screen and (min-width: 768px) {
+  /* стиловите настройки за viewport 768px и нагоре описваме тук */
+
+}/*/mediaquery*/
+
+
+
+
+
+/* ============================================================================================================= 6. ПЕЧАТ*/
+/* Стилове при печат
+ * поместват се същият файл, за да се избегне излишено http запитване, което така или иначе
+ * всички браузъри правят независимо че потребителя не е пожелал да изпечата страницата
+ * www.phpied.com/delay-loading-your-print-css/
+ */
+@media print {
+    * {
+        background: transparent !important;
+        color: black !important;
+        text-shadow: none !important;
+        filter:none !important;
+        -ms-filter: none !important;
+    }
+
+    /* черното се печата по-бързо: sanbeiji.com/archives/953 */
+    a,
+    a:visited {
+        color: #444 !important;
+        text-decoration: underline;
+    }
+
+    /* печата линка към хипервръзката в скоби след нея */
+    a[href]:after {
+        content: " (" attr(href) ")";
+    }
+
+    /* печата описанието на абривиатурата в скоби след нея */
+    abbr[title]:after {
+        content: " (" attr(title) ")";
+    }
+
+    /* анулира горните 2 реда за хипервръзки към изображения, javascript или вътрешни връзки */
+    .ir a:after,
+    a[href^="javascript:"]:after,
+    a[href^="#"]:after {
+        content: "";
+    }
+
+    pre,
+    blockquote {
+        border: 1px solid #999;
+        page-break-inside: avoid;
+    }
+
+    /* css-discuss.incutio.com/wiki/Printing_Tables */
+    thead {
+        display: table-header-group;
+    }
+
+    tr,
+    img {
+        page-break-inside: avoid;
+    }
+
+    img {
+        max-width: 100% !important;
+    }
+
+    @page {
+        margin: 0.5cm;
+    }
+
+    p,
+    h2,
+    h3 {
+        orphans: 3;
+        widows: 3;
+    }
+
+    h2,
+    h3{
+        page-break-after: avoid;
+    }
+}
+
+/* ============================================================================================================= 7. КРАЙ НА УЛИВАНЕТО*/

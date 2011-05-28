@@ -1,0 +1,130 @@
+<!doctype html>
+<!-- Copyright (c) Imprimatur Studio | http://imprimatur.bg/ -->
+
+    <!--<!doctype html> следва да бъде използван за ВСИЧКИ страници, кратките факти за него са:
+        - Вкарва браузъра в Standard Compliance Mode
+        - IE ОСТАВА в Standard Compliance Mode
+        - IE НЕ ПРЕМИНАВА в Quirks Mode режим, дори и IE6-->
+
+    <!--IE условности за избягване на допълнители http запитвания
+        използван код за браузърите на Microsoft
+        if lt IE 7 - ако версията на IE е по-ниска от IE7
+        if IE 7 - ако версията на IE е IE7
+        if IE 8 - ако версията на IE е IE8
+        if gt IE 8 - ако версията на IE е IE9 или по-висока
+        Всеки браузър ще "види" <html> тагът в последният ред, защото тагът не е коментиран.
+        IE ще го интерпретира като по-горните редове
+        По този начин се зарежда само една CSS, с едно запитване до сървъра (което е и задачата,
+        последният ред е описан така че да не дава грешка при валидация.
+        paulirish.com/2008/conditional-stylesheets-vs-css-hacks-answer-neither/-->
+<!--[if lt IE 7]> <html class="no-js ie6 fuie" lang="bg"> <![endif]-->
+<!--[if IE 7]>    <html class="no-js ie7 fuie" lang="bg"> <![endif]-->
+<!--[if IE 8]>    <html class="no-js ie8 fuie" lang="bg"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="bg"> <!--<![endif]-->
+
+
+<head>
+    <!--Character Set (изписването на реда е правилно)
+        Character Set (изписването на реда е правилно, браузърите не използват нищо друго освен
+        фрагмента charset="utf-8"). Този ред е необходимо да е в първите 512 байта заради правилната
+        работа на IE: UTF-7: the case of the missing charset http://code.google.com/p/doctype/wiki/ArticleUtf7-->
+    <meta charset="utf-8">
+
+    <!--Винаги форсира последният IE rendering engine (дори в интранет) и Chrome Frame
+        да НЕ СЕ ползва ако в .htaccess присъства сегмента-->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
+    <!--Заглавие на страницата -->
+    <title></title>
+
+    <!--Описание на страницата -->
+    <meta name="description" content="">
+
+    <!--Автор на страницата -->
+    <meta name="author" content="">
+
+    <!--Mobile viewport optimized: j.mp/bplateviewport
+        Мета таг за мобилни устройства, при зареждане страницата да е с широчината
+        на екрана на устройството при мащаб 1.0 -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!--Постави favicon.ico и apple-touch-icon.png (и останалите за Apple) в основната директория за домейна:
+        http://j.mp/imprimatur-site-ikoni -->
+
+    <!--По подразбиране за всички медии  media="all".
+        При build с Ant на проекта този файл се преименува на style.nomerversiq.css за да не се получава
+        проблем с proxy сървърите -->
+    <link rel="stylesheet" href="css/stil.css">
+
+    <!--Modernizr, засича подръжка на CSS3 и HTML5 свойства, поставя в html елемента класове позволяващи да се
+        използват в стиловата таблица на сайта и добавя подръжка за стилизиране и отпечатване на HTML5
+        елементи в страницата.
+        !В за предпочитане да се ползва http://modernizr.github.com/Modernizr/2.0-beta/ - версия по предпочитания.
+        тъй като няма нужда да прави всички проверки ако няма да се използват на сайта.
+        Трябва да се вмъкне в head елемента, защото IE има нужда да знае за даден елемент преди да дойде
+        време да го рендва - затова не може да стои в дъното на страницата (преди елементите за които става въпрос).
+        http://www.modernizr.com/ -->
+    <script src="js/bib/modernizr-1.7.min.js"></script>
+    <!--Respond, polyfill (remysharp.com/2010/10/08/what-is-a-polyfill/) за min/max-width CSS3 Media Queries
+        (IE 6-8, и други). Използва се като се добавя /*/mediaquery*/ след затварящата скоба на @media
+        https://github.com/scottjehl/Respond -->
+    <script src="js/bib/respond.min.js"></script>
+    <!--Всички JavaScript файлове се указват след съдържанието на страницата, непосредствено преди </body>
+        тагът с изключение на Modernizr и Respond -->
+
+</head>
+
+<body>
+
+    <div id="korica">
+        <header>
+
+        </header>
+        <!--main role, Основното съдържание на документа.
+            Тази роля маркира съдържание, което е в директна или обширна връзка със основната тема на документа.
+            main role е нанатрапчива алтернатива за "премини директно към основното съдържание" хипер връзки, които
+            навигационните опции на четеца да използва за да отведе към основното съдържание (чрез диалог или асистираща
+            технология).
+            Четците ТРЯБВА да третират елементите с role=main като цели на навигацията.
+            В документ или програма, авторът ТРЯБВА да маркира не повече от един елемент с такава роля.
+            http://www.w3.org/TR/wai-aria/roles#main -->
+        <div id="stranica" role="main">
+
+        </div>
+        <footer>
+
+        </footer>
+    </div><!--! край на #korica -->
+
+    <!--jQuery, скриптът се зарежда от сайтът на Google, тъй като е доста вероятно клиентският браузър да
+        го има кеширан от друг сайт посетен преди това, който го зарежда също от там. Вторият ред
+        ни подсигурява ако има проблем със зареждането от този адрес да зареди локално копие.
+        коментарите да се махнат само когато страницата "излезе" от производство, дотогава да
+        се ползва локалното копие с възможност за debug
+        Защо “//” а не “http://” в script src=”//ajax.googleapis.com/ajax/libs/jquery/…
+        “//” е relative-protocol URL
+        Ако страницата се гледа през HTTPS протокол в браузъра, той ще иска да зареди това съдържание
+        през този протокол, респективно през HTTP ще ползва него (ако файлът е локален ще ползва
+        file://protocol). За да се избегне съобщението “This Page Contains Both Secure and Non-secure
+        Items в IE се ползва relative-protocol URL, което ще избегне съобщението за грешка в браузъра.-->
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.min.js"></script>
+    <script>window.jQuery || document.write('<script src="js/libs/jquery-1.6.1.min.js">\x3C/script>')</script>
+
+    <!-- Специфични за страницата плъгини и скриптове -->
+    <!-- scripts concatenated and minified via ant build script-->
+    <script src="js/plugins.js"></script>
+    <script src="js/script.js"></script>
+    <!-- end scripts-->
+
+    <!--Google Analytics оптимизиран скрипт mathiasbynens.be/notes/async-analytics-snippet
+        Промени UA-XXXXX-X да бъде твоето сайт ID-->
+    <script>
+        var _gaq=[['_setAccount','UA-XXXXX-X'],['_trackPageview'],['_trackPageLoadTime']];
+        (function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];g.async=1;
+        g.src=('https:'==location.protocol?'//ssl':'//www')+'.google-analytics.com/ga.js';
+        s.parentNode.insertBefore(g,s)}(document,'script'));
+    </script>
+
+
+</body>
+</html>
